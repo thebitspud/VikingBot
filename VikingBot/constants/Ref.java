@@ -45,6 +45,7 @@ public class Ref {
 			+"\n"
 			+ "\n" + prefix + "nextMeeting - Returns the time of the next meeting."
 			+ "\n" + prefix + "events - Returns a list of events coming up."
+			+ "\n" + prefix + "update - Updates the list of events."
 			+ "\n" + prefix + "role @role - Assigns @role to you. [CURRENTLY UNAVAILABLE]"
 			+ "\n"
 			+ "\n" + "FUN:"

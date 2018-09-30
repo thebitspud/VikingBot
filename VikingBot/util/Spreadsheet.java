@@ -30,13 +30,13 @@ public class Spreadsheet {
 				objJson = new JsonParser().parse(json).getAsJsonArray();
 				break;
 			}catch(Exception e) {
-				System.err.println("Spreadsheet failed to download. Trying again... (Attempt " + i + ")");
+				System.err.println("[Spreadsheet.java] Spreadsheet failed to download. Trying again... (Attempt " + i + ")");
 			}
 		}
 		try {
 			objJson = new JsonParser().parse(json).getAsJsonArray();
 		}catch(Exception e) {
-			System.err.println("Spreadsheet failed to download after " + attempts + " attempts.");
+			System.err.println("[Spreadsheet.java] Spreadsheet failed to download after " + attempts + " attempts.");
 		}
 		
 	}
@@ -51,12 +51,13 @@ public class Spreadsheet {
 			String description = e.get("description").getAsString();
 			String initialDate = e.get("initialdate").getAsString().replaceAll("<", "").replaceAll(">", "");
 			String endDate = e.get("enddate").getAsString().replaceAll("<", "").replaceAll(">", "");
+			String type = e.get("type").getAsString();
 			String imageURL = e.get("imageurl").getAsString();
 			Color colour = new Color(Integer.parseInt(e.get("colour").getAsString(),16));
 			
 			Event event = null;
 			try {
-				event = new Event(name,description, Ref.dateFormat.parse(initialDate), Ref.dateFormat.parse(endDate),imageURL, colour);
+				event = new Event(name,description, Ref.dateFormat.parse(initialDate), Ref.dateFormat.parse(endDate),imageURL,type, colour);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

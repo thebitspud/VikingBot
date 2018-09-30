@@ -19,18 +19,31 @@ public class Event {
 	private Date initialDate;
 	private Date endDate;
 	private String imageURL;
+	private String type;
 	private Color colour;
 
-	public Event(String name, String description, Date initialDate, Date endDate, String imageURL, Color colour) {
+
+	
+	public Event(String name, String description, Date initialDate, Date endDate, String imageURL, String type,
+			Color colour) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.initialDate = initialDate;
 		this.endDate = endDate;
 		this.imageURL = imageURL;
+		this.type = type;
 		this.colour = colour;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getImageURL() {
 		return imageURL;
 	}
@@ -54,14 +67,29 @@ public class Event {
 		
 		eb.setTitle(name);
 		eb.setDescription(description);
-		
-		eb.addField("Event Starts",Ref.dateFormat.format(initialDate),true);
-		eb.addField("Event Ends",Ref.dateFormat.format(endDate),true);
-		
-		eb.setImage(imageURL);
-		eb.setColor(Ref.VIKINGS_MAROON);
+		eb.addField("Event stars",Ref.dateFormat.format(initialDate),true);
+		eb.addField("Event ends",Ref.dateFormat.format(endDate),true);
+		eb.addField("Type",type,true);
+		eb.setThumbnail(imageURL);
+		eb.setColor(this.colour);
 		
 		return eb.build();
+	}
+
+	public Date getInitialDate() {
+		return initialDate;
+	}
+
+	public void setInitialDate(Date initialDate) {
+		this.initialDate = initialDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getLogoURL() {
@@ -100,17 +128,6 @@ public class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getInitialDate() {
-		return initialDate;
-	}
-	public void setInitialDate(Date initialDate) {
-		this.initialDate = initialDate;
-	}
-	public Date getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+
 	
 }
