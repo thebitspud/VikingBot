@@ -46,12 +46,13 @@ public class Ref {
 			+ "\n" + prefix + "nextMeeting - Returns the time of the next meeting."
 			+ "\n" + prefix + "events - Returns a list of events coming up."
 			+ "\n" + prefix + "update - Updates the list of events."
-			+ "\n" + prefix + "role @role - Assigns @role to you. [CURRENTLY UNAVAILABLE]"
+			+ "\n" + prefix + "role @*role* - Assigns @role to you. [CURRENTLY UNAVAILABLE]"
 			+ "\n"
 			+ "\n" + "FUN:"
 			+ "\n" + prefix + "join - Bot joins the voice channel that you are currently in."
 			+ "\n" + prefix + "leave - Bot leaves voice channel."
-			+ "\n" + prefix + "play URL - Bot plays the youtube/soundcloud URL provided."
+			+ "\n" + prefix + "play *URL* - Bot plays the youtube/soundcloud URL provided."
+			+ "\n" + prefix + "source - Links VikingBot's public github repositiory"
 			+ ""
 			
 			+"```";

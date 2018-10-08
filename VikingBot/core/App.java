@@ -175,7 +175,15 @@ public class App extends ListenerAdapter {
     		
     		break;
     		
+    	case "source":
+    		
+    		objMsgCh.sendMessage("https://github.com/VikingsDev/VikingBot").queue();
+    		
+    		break;
+    		
     	default:
+    		
+    		objMsgCh.sendMessage("Unknown command. Try " + Ref.prefix + "help").queue();
     		
     		break:
     	}
