@@ -22,8 +22,6 @@ public class Event {
 	private String type;
 	private Color colour;
 
-
-	
 	public Event(String name, String description, Date initialDate, Date endDate, String imageURL, String type,
 			Color colour) {
 		super();
@@ -59,8 +57,6 @@ public class Event {
 	public void setColour(Color colour) {
 		this.colour = colour;
 	}
-
-
 
 	public MessageEmbed getEmbed() {
 		EmbedBuilder eb = new EmbedBuilder();
@@ -128,6 +124,4 @@ public class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	
 }

@@ -37,13 +37,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import net.dv8tion.jda.core.requests.RestAction;
 
-public class App extends ListenerAdapter
-{
+public class App extends ListenerAdapter {
 	
 	static JDA jda;
 	static ArrayList<Event> events;
-    public static void main( String[] args ) throws LoginException, IOException, ServiceException
-    {
+	
+    public static void main( String[] args ) throws LoginException, IOException, ServiceException {
         jda = new JDABuilder(AccountType.BOT).setToken(Key.TOKEN).build();
         jda.addEventListener(new App());
         jda.getPresence().setGame(Game.of(Game.GameType.DEFAULT, Ref.prefix + "help"));
@@ -60,8 +59,6 @@ public class App extends ListenerAdapter
     	events = Spreadsheet.scanSheet();
     	//System.out.println("Update");
     }
-
-
     
     @Override
     public void onMessageReceived(MessageReceivedEvent evt) {
@@ -90,60 +87,97 @@ public class App extends ListenerAdapter
     		}	  		
     	}
     	
-    	if(command.equalsIgnoreCase("help")) {
+    	switch(command.equalsIgnoreCase) {
+    	case "help":
+    		
     		objMsgCh.sendMessage(Ref.helpMessage).queue();
-    	}else if(command.equalsIgnoreCase("nextMeeting") || command.equalsIgnoreCase("meeting")) {
+    		
+    		break;
+    		
+    	case "nextMeeting":
+    	case "meeting":
+    		
     		LocalDate nextWed = LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.WEDNESDAY));
     		String date = nextWed.getDayOfWeek().name() + ", " + nextWed.getMonth().name() + " " + nextWed.getDayOfMonth() + ", " + nextWed.getYear();
+    		
     		EmbedBuilder eb = new EmbedBuilder();
     		eb.setTitle("Next meeting",Ref.WEBSITE_URL);
     		eb.setColor(Ref.VIKINGS_MAROON);
     		eb.addField(date,"3:10pm - 4:30pm",false);
     		eb.addField("Location","BNSS - Room 315",false);
     		eb.setThumbnail(Ref.LOGO_URL);
+    		
     		objMsgCh.sendMessage(eb.build()).queue();
-    	}else if(command.equalsIgnoreCase("invite")) {
+    		
+    		break;
+    	
+    	case "invite":
+    		
     		objMsgCh.sendMessage("https://discord.gg/u5Fwsgy").queue();
-    	}else if(command.equalsIgnoreCase("events") || command.equalsIgnoreCase("event") || command.equalsIgnoreCase("evt")) {
+    		
+    		break;
+    		
+    	case "events":
+    	case "event":
+    	case "evt":
+    		
     		EmbedBuilder title = new EmbedBuilder();
-    		title.setTitle("Upcoming Events, Homework, or Tests");
+    		title.setTitle("Upcoming Events, Homework, and Tests");
     		
     		title.setColor(Ref.VIKINGS_MAROON);
     		String description = "`" + events.size() + " events in total.`\n\n";
     		Map<String, Integer> eventSummary = getEventSummary();
+    		
     		for(String type : getEventSummary().keySet()) {
-    			if(eventSummary.get(type) > 1) {
+    			if(eventSummary.get(type) > 1)
     				description += "`" + eventSummary.get(type) + " " + type + "s coming up.`\n";
-    			}else {
-    				description += "`" + eventSummary.get(type) + " " + type + " coming up.`\n";
-    			}
-    			
+    			else description += "`" + eventSummary.get(type) + " " + type + " coming up.`\n";
     		}
+    		
     		title.setDescription(description);
     		objMsgCh.sendMessage(title.build()).queue();
     		
-    		for(Event e: events) {
-    		    objMsgCh.sendMessage(e.getEmbed()).queue();
-    		}
-    	}else if(command.equalsIgnoreCase("update")) {
+    		for(Event e: events) objMsgCh.sendMessage(e.getEmbed()).queue();
+    		
+    		break;
+    		
+    	case "update":
+    		
     		Spreadsheet.updateLocalSheet();
     		events = Spreadsheet.scanSheet();
     		objMsgCh.sendMessage("Events updated.").queue();
-    	}else if(command.equalsIgnoreCase("join")) {
-    		if(objMember.getVoiceState().inVoiceChannel()) {
-    			Music.joinChannel(objMember.getVoiceState().getChannel());
-    			
-    			//Music.joinChannel(493513615505358857L);
-    		}else {
-    			objMsgCh.sendMessage(objUser.getAsMention() + " You must be in a voice channel to use this command!").queue();
-    		}
     		
-    	}else if(command.equalsIgnoreCase("leave")) {
+    		break;
+    		
+    	case "join":
+    		
+    		if(objMember.getVoiceState().inVoiceChannel()) //Music.joinChannel(493513615505358857L);
+    			Music.joinChannel(objMember.getVoiceState().getChannel());
+    		else objMsgCh.sendMessage(objUser.getAsMention() + " You must be in a voice channel to use this command!").queue();
+    		
+    		break;
+    		
+    	case "leave":
+    		
     		Music.exitChannel();
-    	}else if(command.equalsIgnoreCase("play")) {
+    		
+    		break;
+    		
+    	case "play":
+    		
     		Music.play(input);
-    	}else if(command.equalsIgnoreCase("terminate")) {
+    		
+    		break;
+    		
+    	case "terminate":
+    		
     		jda.shutdown();
+    		
+    		break;
+    		
+    	default:
+    		
+    		break:
     	}
     }
     
@@ -166,7 +200,9 @@ public class App extends ListenerAdapter
     			eventTypes.add(e.getType());
     		}
     	}
+    	
     	Map<String, Integer> typeSummary = new HashMap<String,Integer>();
+    	
     	for(String et : eventTypes) {
     		int count = 0;
     		for(Event e : events) {
@@ -176,6 +212,7 @@ public class App extends ListenerAdapter
     		}
     		typeSummary.put(et, count);
     	}
+    	
     	return typeSummary;
     }
 }
